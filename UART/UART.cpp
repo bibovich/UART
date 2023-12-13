@@ -201,45 +201,45 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_COMMAND: {
 		switch (LOWORD(wParam)) {
-		case ID_INIT_PORT: {
-			initPort(hwnd, hCOMRx, COMPORT_Rx, nComRate, nComBits, timeout);
-			Sleep(500);
-			initPort(hwnd, hCOMTx, COMPORT_Tx, nComRate, nComBits, timeout);
-			Sleep(500);
-			break;
-		}
-		case ID_INPUT_PORT: {
-			// Transmit side
-			TCHAR msgOut[] = _T("some important message");			// Sent message	
-
-			outputToPort(hwnd, hCOMTx, msgOut, sizeof(msgOut));
-			Sleep(500);
-			break;
-
-		}
-		case ID_OUTPUT_PORT: {
-			// Receive side  
-			TCHAR msgIn[BUFSIZE]{};
-			DWORD bytesRead;
-			bytesRead = inputFromPort(hwnd, hCOMRx, msgIn, BUFSIZE);			// Receive string from port
-
-			TCHAR msg[BUFSIZE]{};
-			StringCbPrintf(msg, BUFSIZE, TEXT("%d"), bytesRead);
-
-			MessageBox(nullptr, msgIn, _T("Message has been received"), MB_ICONINFORMATION | MB_OK);
-			break;
-		}
-		case ID_CLOSE_PORT: {
-			purgePort(hCOMRx);											// Purge the Rx port
-			purgePort(hCOMTx);											// Purge the Tx port
-
-			CloseHandle(hCOMRx);										// Close the handle to Rx port 
-			MessageBox(nullptr, _T("Port is closed"), COMPORT_Rx, MB_ICONINFORMATION | MB_OK);
-
-			CloseHandle(hCOMTx);										// Close the handle to Tx port 
-			MessageBox(nullptr, _T("Port is closed"), COMPORT_Tx, MB_ICONINFORMATION | MB_OK);
-			break;
-		}
+			case ID_INIT_PORT: {
+				initPort(hwnd, hCOMRx, COMPORT_Rx, nComRate, nComBits, timeout);
+				Sleep(500);
+				initPort(hwnd, hCOMTx, COMPORT_Tx, nComRate, nComBits, timeout);
+				Sleep(500);
+				break;
+			}
+			case ID_INPUT_PORT: {
+				// Transmit side
+				TCHAR msgOut[] = _T("some important message");			// Sent message	
+	
+				outputToPort(hwnd, hCOMTx, msgOut, sizeof(msgOut));
+				Sleep(500);
+				break;
+	
+			}
+			case ID_OUTPUT_PORT: {
+				// Receive side  
+				TCHAR msgIn[BUFSIZE]{};
+				DWORD bytesRead;
+				bytesRead = inputFromPort(hwnd, hCOMRx, msgIn, BUFSIZE);			// Receive string from port
+	
+				TCHAR msg[BUFSIZE]{};
+				StringCbPrintf(msg, BUFSIZE, TEXT("%d"), bytesRead);
+	
+				MessageBox(nullptr, msgIn, _T("Message has been received"), MB_ICONINFORMATION | MB_OK);
+				break;
+			}
+			case ID_CLOSE_PORT: {
+				purgePort(hCOMRx);											// Purge the Rx port
+				purgePort(hCOMTx);											// Purge the Tx port
+	
+				CloseHandle(hCOMRx);										// Close the handle to Rx port 
+				MessageBox(nullptr, _T("Port is closed"), COMPORT_Rx, MB_ICONINFORMATION | MB_OK);
+	
+				CloseHandle(hCOMTx);										// Close the handle to Tx port 
+				MessageBox(nullptr, _T("Port is closed"), COMPORT_Tx, MB_ICONINFORMATION | MB_OK);
+				break;
+			}
 		}
 		break;
 	}
